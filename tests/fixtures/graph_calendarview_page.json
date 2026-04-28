@@ -1,0 +1,51 @@
+{
+  "value": [
+    {
+      "id": "AAMkAGE1M2IyNGNmLTI5MTktNDUwMi1iNWRhLTExOWYxOTc2YWFlNwBGAAAAAADDmpqjZbWZTK2nJL0AAAAAAAAABGAAAAAAAAAAAAAAAAAA=",
+      "subject": "Q2 Planning",
+      "start": {
+        "dateTime": "2026-05-01T09:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-05-01T10:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Conference Room A"
+      },
+      "body": {
+        "contentType": "html",
+        "content": "<html><body><p>Quarterly planning session</p></body></html>"
+      },
+      "lastModifiedDateTime": "2026-04-20T14:30:00.0000000Z",
+      "isCancelled": false,
+      "type": "singleInstance",
+      "seriesMasterId": null
+    },
+    {
+      "id": "BBMkAGE1M2IyNGNmLTI5MTktNDUwMi1iNWRhLTExOWYxOTc2YWFlNwBGAAAAAADDmpqjZbWZTK2nJL0AAAAAAAAABGAAAAAAAAAAAAAAAAAB=",
+      "subject": "1:1 with Manager",
+      "start": {
+        "dateTime": "2026-05-02T13:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-05-02T13:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": ""
+      },
+      "body": {
+        "contentType": "text",
+        "content": "Weekly sync"
+      },
+      "lastModifiedDateTime": "2026-04-21T08:00:00.0000000Z",
+      "isCancelled": false,
+      "type": "singleInstance",
+      "seriesMasterId": null
+    }
+  ],
+  "@odata.nextLink": null
+}

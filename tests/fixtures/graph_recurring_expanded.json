@@ -1,0 +1,74 @@
+{
+  "value": [
+    {
+      "id": "CCMkAGE1instance001==",
+      "subject": "Weekly Standup",
+      "start": {
+        "dateTime": "2026-05-05T09:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-05-05T09:15:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Teams"
+      },
+      "body": {
+        "contentType": "text",
+        "content": "Daily standup"
+      },
+      "lastModifiedDateTime": "2026-04-15T10:00:00.0000000Z",
+      "isCancelled": false,
+      "type": "occurrence",
+      "seriesMasterId": "CCMkAGE1master=="
+    },
+    {
+      "id": "CCMkAGE1instance002==",
+      "subject": "Weekly Standup",
+      "start": {
+        "dateTime": "2026-05-12T09:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-05-12T09:15:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Teams"
+      },
+      "body": {
+        "contentType": "text",
+        "content": "Daily standup"
+      },
+      "lastModifiedDateTime": "2026-04-15T10:00:00.0000000Z",
+      "isCancelled": false,
+      "type": "occurrence",
+      "seriesMasterId": "CCMkAGE1master=="
+    },
+    {
+      "id": "CCMkAGE1instance003==",
+      "subject": "Weekly Standup",
+      "start": {
+        "dateTime": "2026-05-19T09:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-05-19T09:15:00.0000000",
+        "timeZone": "UTC"
+      },
+      "location": {
+        "displayName": "Teams"
+      },
+      "body": {
+        "contentType": "text",
+        "content": "Daily standup"
+      },
+      "lastModifiedDateTime": "2026-04-18T12:00:00.0000000Z",
+      "isCancelled": true,
+      "type": "occurrence",
+      "seriesMasterId": "CCMkAGE1master=="
+    }
+  ],
+  "@odata.nextLink": null
+}

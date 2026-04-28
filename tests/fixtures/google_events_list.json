@@ -1,0 +1,58 @@
+{
+  "kind": "calendar#events",
+  "summary": "Work (synced)",
+  "etag": "\"p33o9bnfsvgu4o0g\"",
+  "updated": "2026-04-28T10:00:00.000Z",
+  "timeZone": "UTC",
+  "accessRole": "owner",
+  "items": [
+    {
+      "kind": "calendar#event",
+      "etag": "\"3421234567890000\"",
+      "id": "google_evt_aaa111",
+      "status": "confirmed",
+      "summary": "Quarterly Planning Review",
+      "description": "Discuss roadmap priorities for Q3.",
+      "location": "Conference Room B",
+      "start": {
+        "dateTime": "2026-04-29T14:00:00Z",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-04-29T15:00:00Z",
+        "timeZone": "UTC"
+      },
+      "extendedProperties": {
+        "private": {
+          "ogmac_owned": "1",
+          "ogmac_instance_id": "AAMkADEwNjQ5OWMxLTk3OTEtNGIyZi1iMGVlLTMwZjRmNThhNzI2ZABGAAAAAADrX",
+          "ogmac_source_modified": "2026-04-27T09:15:00+00:00"
+        }
+      }
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"3421234567891111\"",
+      "id": "google_evt_bbb222",
+      "status": "confirmed",
+      "summary": "1:1 with Manager",
+      "description": "",
+      "location": null,
+      "start": {
+        "dateTime": "2026-04-30T09:00:00Z",
+        "timeZone": "UTC"
+      },
+      "end": {
+        "dateTime": "2026-04-30T09:30:00Z",
+        "timeZone": "UTC"
+      },
+      "extendedProperties": {
+        "private": {
+          "ogmac_owned": "1",
+          "ogmac_instance_id": "AAMkADEwNjQ5OWMxLTk3OTEtNGIyZi1iMGVlLTMwZjRmNThhNzI2ZABGAAAAAADrY",
+          "ogmac_source_modified": "2026-04-26T16:30:00+00:00"
+        }
+      }
+    }
+  ]
+}
