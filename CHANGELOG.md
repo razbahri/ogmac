@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+- Sync window is now **day-aligned** in the user's local timezone — `[start_of(today − window_past_days) local, start_of(today + window_future_days + 1) local)`. Previously the window was relative to "now", which caused events near the past edge to slide out of scope mid-day (and get DELETEd from Google) and to flap CREATE/DELETE pairs across runs. Day-aligned means every sync of the same calendar day evaluates the same window.
+
 ## [0.2.0] - 2026-05-09
 
 ### Added
