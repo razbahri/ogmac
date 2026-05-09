@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS run_state (
 _KEY_FAILURES = "consecutive_failures"
 _KEY_DISABLED = "disabled"
 _KEY_DISABLE_REASON = "disable_reason"
+_KEY_PAUSED = "paused"
 
 
 def _to_iso(dt: datetime) -> str:
@@ -175,6 +176,16 @@ class State:
     def enable(self) -> None:
         self.delete_run_state(_KEY_DISABLED)
         self.delete_run_state(_KEY_DISABLE_REASON)
+
+    @property
+    def is_paused(self) -> bool:
+        return self.get_run_state(_KEY_PAUSED) == "1"
+
+    def pause(self) -> None:
+        self.set_run_state(_KEY_PAUSED, "1")
+
+    def unpause(self) -> None:
+        self.delete_run_state(_KEY_PAUSED)
 
     # ── wipe ───────────────────────────────────────────────────────────────
 

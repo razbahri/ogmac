@@ -16,3 +16,6 @@ htmlcov/
 *.db-wal
 *.db-shm
 client_secret.json
+*.local.md
+.DS_Store
+xcuserdata/

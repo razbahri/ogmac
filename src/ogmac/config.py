@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+import warnings
 from pathlib import Path
 from typing import Literal
 
 import yaml
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 class ConfigError(Exception):
@@ -29,9 +30,10 @@ class GoogleConfig(BaseModel):
 
 
 class SyncConfig(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
     window_past_days: int = 1
     window_future_days: int = 30
-    interval_seconds: int = 900
 
 
 class PrivacyConfig(BaseModel):
@@ -71,6 +73,13 @@ class Config(BaseModel):
         except FileNotFoundError:
             raise ConfigError(f"Config file not found: {path}")
         data = yaml.safe_load(raw)
+        if isinstance(data.get("sync"), dict) and "interval_seconds" in data["sync"]:
+            warnings.warn(
+                "sync.interval_seconds is deprecated and has no effect; "
+                "the sync interval is controlled by the launchd plist.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
         return cls.model_validate(data)
 
     @classmethod

@@ -1,0 +1,2 @@
+2026-05-08T14:15:00Z INFO  ogmac.cli sync.start window=[2026-05-07..2026-06-07]
+2026-05-08T14:15:01Z ERROR ogmac.cli sync.failure n=1 type=TokenRefreshError

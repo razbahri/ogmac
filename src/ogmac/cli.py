@@ -61,6 +61,9 @@ def _run_sync(cfg: Config, state: State) -> int:
     if state.is_disabled:
         log.info("sync.skipped reason=disabled")
         return 0
+    if state.is_paused:
+        log.info("sync.skipped reason=paused")
+        return 0
 
     t_start = time.monotonic()
     start = _utcnow() - timedelta(days=cfg.sync.window_past_days)
@@ -203,6 +206,26 @@ def _cmd_status(args: argparse.Namespace, cfg: Config) -> int:
         state.close()
 
 
+def _cmd_pause(args: argparse.Namespace, cfg: Config) -> int:
+    state = State(state_db_path())
+    try:
+        state.pause()
+        log.info("pause: set paused flag")
+        return 0
+    finally:
+        state.close()
+
+
+def _cmd_unpause(args: argparse.Namespace, cfg: Config) -> int:
+    state = State(state_db_path())
+    try:
+        state.unpause()
+        log.info("unpause: cleared paused flag")
+        return 0
+    finally:
+        state.close()
+
+
 def _cmd_resume(args: argparse.Namespace, cfg: Config) -> int:
     state = State(state_db_path())
     try:
@@ -275,6 +298,9 @@ def main(argv: list[str] | None = None) -> int:
 
     subparsers.add_parser("status", help="Print sync state and exit with code reflecting health.")
 
+    subparsers.add_parser("pause", help="Pause syncing until 'ogmac unpause'.")
+    subparsers.add_parser("unpause", help="Resume syncing after 'ogmac pause'.")
+
     subparsers.add_parser("resume", help="Clear disabled flag and run sync immediately.")
 
     reset_parser = subparsers.add_parser("reset", help="Wipe all ogmac-owned Google events and local state.")
@@ -315,6 +341,10 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_sync(args, cfg)
     elif args.command == "login":
         return _cmd_login(args, cfg)
+    elif args.command == "pause":
+        return _cmd_pause(args, cfg)
+    elif args.command == "unpause":
+        return _cmd_unpause(args, cfg)
     elif args.command == "resume":
         return _cmd_resume(args, cfg)
     elif args.command == "reset":

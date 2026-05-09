@@ -10,12 +10,32 @@
     <array>
         <string>__OGMAC_PYTHON__</string>
         <string>-m</string>
-        <string>ogmac.cli</string>
+        <string>ogmac</string>
         <string>sync</string>
     </array>
 
-    <key>StartInterval</key>
-    <integer>900</integer>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Minute</key><integer>15</integer></dict>
+        <dict><key>Minute</key><integer>30</integer></dict>
+        <dict><key>Minute</key><integer>45</integer></dict>
+    </array>
+
+    <key>LaunchEvents</key>
+    <dict>
+        <key>com.apple.notifyd.matching</key>
+        <dict>
+            <key>NetworkChange</key>
+            <dict>
+                <key>Notification</key>
+                <string>com.apple.system.config.network_change</string>
+            </dict>
+        </dict>
+    </dict>
+
+    <key>ThrottleInterval</key>
+    <integer>120</integer>
 
     <key>RunAtLoad</key>
     <true/>

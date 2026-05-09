@@ -132,6 +132,45 @@ ogmac login google
 ogmac login microsoft   # only if read_method: microsoft_graph
 ```
 
+## Menu bar app
+
+### Menu bar app shows "CLI not found" (FirstLaunchView)
+
+The app checked for `ogmac` on `PATH` and at the venv fallback path (`~/.local/share/ogmac/venv/bin/ogmac`) and found neither. This happens on a clean machine before the CLI is installed, or after moving/deleting the venv.
+
+**Fix:** run the installer, which installs the venv and registers the CLI:
+
+```bash
+./packaging/install.sh
+```
+
+Then quit and reopen `Ogmac.app`. If the app still shows the setup screen after the CLI is installed, confirm the binary is on the PATH that GUI apps see:
+
+```bash
+launchctl asuser $UID /usr/bin/env which ogmac
+```
+
+If blank, add the install location to your shell profile and re-login.
+
+### Menu bar icon doesn't update
+
+The app uses a file-system watcher on `~/Library/Application Support/ogmac/state.db` rather than a timer. Two cases:
+
+1. **`state.db` doesn't exist yet** — happens on a clean machine before the first sync. The app falls back to a 30 s retry timer; once the daemon runs once, the watcher takes over. Force it with `ogmac sync`.
+2. **The watcher silently isn't firing** — check `~/Library/Logs/ogmac/menubar.log` for `StateFileWatcher started fd=...` and subsequent `StateFileWatcher event` lines. If you see `started` but no events, the daemon isn't actually writing. Verify with `ls -la ~/Library/Application\ Support/ogmac/` and check the file mtime.
+
+### History is empty even though `sync.log` has runs
+
+The History view filters out the no-op syncs that fire every ~2 min from the plist's `NetworkChange` LaunchEvent (see `packaging/com.ogmac.sync.plist`). Only runs that did real work, failed, or landed near `:00`/`:15`/`:30`/`:45` are shown. If you've had a quiet hour and no scheduled ticks have happened yet, the list will be empty — that's expected.
+
+### Settings changes don't persist
+
+The settings pane writes to `~/.config/ogmac/config.yaml` on every field change (atomic temp-file + rename). If saves silently don't take effect, check `~/Library/Logs/ogmac/menubar.log` for ConfigStore errors. Common causes: the config directory doesn't exist yet (run `ogmac login` once to create it), or the file is owned by another user.
+
+### Settings window doesn't appear
+
+`Ogmac.app` runs as `LSUIElement=true` (no Dock icon), which means opening a window doesn't auto-activate the app. The Settings window is opened with an explicit `NSApp.activate(ignoringOtherApps: true)` in v0.2 — if it's still not coming to front, look behind your other windows or try `Cmd-Tab` and select **ogmac**.
+
 ## Still stuck?
 
 Open an [Issue](https://github.com/razbahri/ogmac/issues) with:

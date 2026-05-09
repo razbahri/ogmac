@@ -1,0 +1,3 @@
+2026-05-08T14:15:00Z INFO  ogmac.cli sync.start window=[2026-05-07..2026-06-07]
+2026-05-08T14:15:01Z INFO  ogmac.cli outlook.fetch count=42 method=apple_calendar
+2026-05-08T14:15:02Z INFO  ogmac.cli google.fetch count=40
