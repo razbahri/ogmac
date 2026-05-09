@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-09
+
 ### Added
 - **Menu bar app** (`Ogmac.app`) — SwiftUI status item that surfaces sync state, settings, and run history without a terminal. Built unsigned; install via `bash packaging/build_app.sh` then `open dist/Ogmac.app`. Spec: `docs/superpowers/specs/2026-05-08-menu-bar-app-design.md`. Plan: `docs/superpowers/plans/2026-05-08-menu-bar-app-team-breakdown.md`.
 - File-system event watcher on `state.db` (DispatchSource). The panel refreshes within ~200 ms of each daemon write — no periodic polling, no missed updates regardless of sync duration.
@@ -13,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - History view with a "meaningful runs only" filter. Hides the every-2-min network-change-triggered no-op syncs; keeps real changes, failures, and the scheduled `:00`/`:15`/`:30`/`:45` ticks.
 - Diagnostic log file at `~/Library/Logs/ogmac/menubar.log` with structured per-event lines for refresh activity, file-watcher events, and reader errors.
 - `ogmac pause` and `ogmac unpause` subcommands. `_run_sync` early-returns when paused. The `paused` flag persists in `state.db` and survives reboots, mirroring the existing `disabled` pattern.
+- Custom app bundle icon — dark squircle background with a white rounded-rectangle outline (`╭─╮ ╰─╯`), rendered programmatically in 7 sizes (16/32/64/128/256/512/1024 px).
 
 ### Changed
 - `sync.interval_seconds` removed from the config schema. The field was never read; `StartCalendarInterval` in the launchd plist is the only schedule source. Existing configs that still contain the field are silently accepted with a deprecation warning.
@@ -35,5 +38,6 @@ Initial release.
 - launchd integration via `packaging/install.sh` (15-minute schedule, log rotation).
 - Refresh tokens stored exclusively in macOS Keychain (`ogmac.google`, `ogmac.microsoft`).
 
-[Unreleased]: https://github.com/razbahri/ogmac/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/razbahri/ogmac/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/razbahri/ogmac/releases/tag/v0.2.0
 [0.1.0]: https://github.com/razbahri/ogmac/releases/tag/v0.1.0
