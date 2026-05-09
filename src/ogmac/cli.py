@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, tzinfo
 from pathlib import Path
 
 from ogmac.auth import TokenRefreshError, get_google_credentials, get_graph_token, login_google, login_microsoft
@@ -30,6 +30,28 @@ def state_db_path() -> Path:
 
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def _compute_sync_window(
+    now: datetime,
+    past_days: int,
+    future_days: int,
+    tz: tzinfo | None = None,
+) -> tuple[datetime, datetime]:
+    """Day-aligned `[start, end)` window in `tz` (default: system local).
+
+    `start` is midnight `past_days` days before today; `end` is midnight
+    `future_days + 1` days after today (exclusive). Returned datetimes are
+    UTC-aware so the rest of the pipeline can use them directly.
+
+    Day-aligned avoids boundary churn within a day: every sync of the
+    same calendar day evaluates the same window.
+    """
+    local = now.astimezone(tz)
+    local_midnight = local.replace(hour=0, minute=0, second=0, microsecond=0)
+    start_local = local_midnight - timedelta(days=past_days)
+    end_local = local_midnight + timedelta(days=future_days + 1)
+    return start_local.astimezone(timezone.utc), end_local.astimezone(timezone.utc)
 
 
 def _utcnow_iso() -> str:
@@ -66,13 +88,16 @@ def _run_sync(cfg: Config, state: State) -> int:
         return 0
 
     t_start = time.monotonic()
-    start = _utcnow() - timedelta(days=cfg.sync.window_past_days)
-    end = _utcnow() + timedelta(days=cfg.sync.window_future_days)
+    start, end = _compute_sync_window(
+        _utcnow(),
+        cfg.sync.window_past_days,
+        cfg.sync.window_future_days,
+    )
 
     log.info(
-        "sync.start window=[%s..%s]",
-        start.strftime("%Y-%m-%d"),
-        end.strftime("%Y-%m-%d"),
+        "sync.start window=[%s..%s)",
+        start.astimezone().strftime("%Y-%m-%d"),
+        end.astimezone().strftime("%Y-%m-%d"),
     )
 
     try:
