@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-05-09
+
 ### Changed
 - Sync window is now **day-aligned** in the user's local timezone — `[start_of(today − window_past_days) local, start_of(today + window_future_days + 1) local)`. Previously the window was relative to "now", which caused events near the past edge to slide out of scope mid-day (and get DELETEd from Google) and to flap CREATE/DELETE pairs across runs. Day-aligned means every sync of the same calendar day evaluates the same window.
 
@@ -41,6 +43,7 @@ Initial release.
 - launchd integration via `packaging/install.sh` (15-minute schedule, log rotation).
 - Refresh tokens stored exclusively in macOS Keychain (`ogmac.google`, `ogmac.microsoft`).
 
-[Unreleased]: https://github.com/razbahri/ogmac/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/razbahri/ogmac/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/razbahri/ogmac/releases/tag/v0.2.1
 [0.2.0]: https://github.com/razbahri/ogmac/releases/tag/v0.2.0
 [0.1.0]: https://github.com/razbahri/ogmac/releases/tag/v0.1.0
