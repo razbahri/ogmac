@@ -1,0 +1,23 @@
+outlook:
+  account: you@example.com
+  source_calendar: default
+  read_method: apple_calendar
+
+google:
+  account: you@gmail.com
+  client_secret_path: ~/.config/ogmac/client_secret.json
+  target_calendar_id: abc123@group.calendar.google.com
+
+sync:
+  window_past_days: 1
+  window_future_days: 30
+
+privacy:
+  copy_subject: true
+  copy_location: true
+  copy_body: true
+  copy_attendees: false
+
+failure:
+  max_consecutive_before_disable: 5
+  notify_on_failure: true

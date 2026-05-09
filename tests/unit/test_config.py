@@ -44,7 +44,7 @@ def test_defaults_applied(tmp_path):
     assert cfg.outlook.read_method == "apple_calendar"
     assert cfg.sync.window_past_days == 1
     assert cfg.sync.window_future_days == 30
-    assert cfg.sync.interval_seconds == 900
+    assert not hasattr(cfg.sync, "interval_seconds")
     assert cfg.privacy.copy_subject is True
     assert cfg.privacy.copy_location is True
     assert cfg.privacy.copy_body is True
@@ -55,12 +55,11 @@ def test_defaults_applied(tmp_path):
 
 def test_explicit_values_override_defaults(tmp_path):
     data = minimal_data(tmp_path)
-    data["sync"] = {"window_past_days": 2, "window_future_days": 60, "interval_seconds": 1800}
+    data["sync"] = {"window_past_days": 2, "window_future_days": 60}
     data["failure"] = {"max_consecutive_before_disable": 3, "notify_on_failure": False}
     cfg = Config.load(write_yaml(tmp_path / "config.yaml", data))
     assert cfg.sync.window_past_days == 2
     assert cfg.sync.window_future_days == 60
-    assert cfg.sync.interval_seconds == 1800
     assert cfg.failure.max_consecutive_before_disable == 3
     assert cfg.failure.notify_on_failure is False
 
@@ -136,6 +135,27 @@ def test_read_method_invalid_rejected(tmp_path):
     data["outlook"]["read_method"] = "carrier_pigeon"
     with pytest.raises(ValidationError):
         Config.load(write_yaml(tmp_path / "config.yaml", data))
+
+
+# ── interval_seconds deprecation ──────────────────────────────────────────
+
+def test_legacy_interval_seconds_dropped_silently(tmp_path):
+    data = minimal_data(tmp_path)
+    data["sync"] = {"window_past_days": 1, "window_future_days": 30, "interval_seconds": 900}
+    with pytest.warns(DeprecationWarning, match="interval_seconds"):
+        cfg = Config.load(write_yaml(tmp_path / "config.yaml", data))
+    assert not hasattr(cfg.sync, "interval_seconds")
+    assert cfg.sync.window_past_days == 1
+    assert cfg.sync.window_future_days == 30
+
+
+def test_no_warning_without_interval_seconds(tmp_path):
+    data = minimal_data(tmp_path)
+    import warnings as _warnings
+    with _warnings.catch_warnings():
+        _warnings.simplefilter("error", DeprecationWarning)
+        cfg = Config.load(write_yaml(tmp_path / "config.yaml", data))
+    assert cfg.sync.window_past_days == 1
 
 
 # ── file-not-found ─────────────────────────────────────────────────────────

@@ -1,0 +1,5 @@
+2026-05-08T14:15:00Z INFO  ogmac.cli sync.skipped reason=paused
+2026-05-08T14:30:00Z INFO  ogmac.cli sync.skipped reason=disabled
+2026-05-08T15:00:00Z INFO  ogmac.cli sync.start window=[2026-05-07..2026-06-07]
+2026-05-08T15:00:01Z INFO  ogmac.cli reconcile create=1 update=0 delete=0 skip=39
+2026-05-08T15:00:02Z INFO  ogmac.cli sync.success duration_ms=1877

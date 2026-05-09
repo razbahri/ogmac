@@ -151,6 +151,34 @@ def test_enable_clears_reason(state):
     assert state.get_run_state("disable_reason") is None
 
 
+# ── pause / unpause ───────────────────────────────────────────────────────
+
+def test_not_paused_by_default(state):
+    assert state.is_paused is False
+
+
+def test_pause_and_unpause(state):
+    state.pause()
+    assert state.is_paused is True
+    state.unpause()
+    assert state.is_paused is False
+
+
+def test_pause_persists_across_reopen(tmp_path):
+    db = tmp_path / "state.db"
+    s1 = State(db)
+    s1.pause()
+    s1.close()
+    s2 = State(db)
+    assert s2.is_paused is True
+    s2.close()
+
+
+def test_unpause_when_not_paused_is_noop(state):
+    state.unpause()
+    assert state.is_paused is False
+
+
 # ── wipe operations ────────────────────────────────────────────────────────
 
 def test_wipe_event_map(state):

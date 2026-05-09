@@ -1,0 +1,24 @@
+outlook:
+  account: legacy@example.com
+  source_calendar: Work
+  read_method: microsoft_graph
+
+google:
+  account: legacy@gmail.com
+  client_secret_path: ~/.config/ogmac/client_secret.json
+  target_calendar_id: legacy123@group.calendar.google.com
+
+sync:
+  window_past_days: 2
+  window_future_days: 60
+  interval_seconds: 300
+
+privacy:
+  copy_subject: true
+  copy_location: false
+  copy_body: false
+  copy_attendees: false
+
+failure:
+  max_consecutive_before_disable: 3
+  notify_on_failure: false
